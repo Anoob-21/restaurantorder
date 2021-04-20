@@ -22,6 +22,7 @@ public class OrderController {
             (@RequestParam(value="consumerId") String consumerId) {
 
         log.info("Calling order service for consumer id : {}",consumerId);
+
         RestaurantOrderDto restaurantOrderDto = orderService.getOrder(consumerId);
         log.info("received response :");
 
