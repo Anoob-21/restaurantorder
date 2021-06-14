@@ -18,9 +18,12 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
-
+    //Move this to service.
+    //COntroller
     @Value("${message:Hello default}")
     private String message;
+
+    //Change from get order to order.
 
     @GetMapping("/getOrder")
     public ResponseEntity<RestaurantOrderDto> getOrder
@@ -29,6 +32,7 @@ public class OrderController {
         log.info("Received message is : {}",message);
         log.info("Calling order service for consumer id : {}",consumerId);
 
+
         RestaurantOrderDto restaurantOrderDto = orderService.getOrder(consumerId);
         log.info("received response :");
 
@@ -36,7 +40,12 @@ public class OrderController {
                 (restaurantOrderDto, HttpStatus.OK);
         return responseEntity;
     }
-    //Get all orders.
+
+    @GetMapping("/getMessage")
+    public String getDisplayMessage(){
+        return message;
+    }
+
 
     @PostMapping("/createOrder")
     public ResponseEntity<RestaurantOrderDto> createRestaurantOrder
@@ -46,7 +55,7 @@ public class OrderController {
         RestaurantOrderDto restaurantSavedOrderDto =
                 orderService.createOrder(restaurantOrderDto);
         log.info("New order created");
-
+        //Move this to service.controller should just delegate.
         ResponseEntity<RestaurantOrderDto> responseEntity;
         if(restaurantSavedOrderDto.getFlag()){
             responseEntity = new ResponseEntity<>
